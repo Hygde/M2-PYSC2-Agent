@@ -41,3 +41,36 @@ Here is the list of the goals:
             * Current technology tree.
             * Shades of countering (Dilemna, building tech for better unit or using current ones).
         * Problem with reactivity (Building takes time, weight on best units (for race), unit building properties).
+        
+## Wrapper
+
+* Fonctions (Implicitly implement highest queue priority):
+    * Select Unit (Coordinates)
+    * Select Group Unit (Mono) 
+        * Select all of unit type
+        * Select amount of unit type
+        * Selection with zone of units (rectangular)
+    
+    * Move selected units
+        * Use minimap
+        * Use Screen
+    * Do function (Général) (Compliquer)
+    * Create building
+    * Create unit
+    * Move screen
+        * Use screen
+        * Use minimap
+    * Attack with selected units:
+        * Coordinates
+        * Unit
+
+## Counter Rush
+
+* Course of action:
+    1) Find the right timing to build the wall
+    2) Find the right position for:
+        1) Supply D * 2
+        2) Barrack
+    3) Find the right timing to counter
+    4) What if, there's is no rush?
+    5) What's next if game is still ongoing?
