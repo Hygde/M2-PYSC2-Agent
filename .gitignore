@@ -1,3 +1,6 @@
+#JetBrains project files
+.idea
+
 #vscode cache
 .vscode/
 
