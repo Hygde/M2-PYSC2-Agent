@@ -43,9 +43,10 @@ class Agent(BaseAgent):
     # @param obs is all the available observation of the current state of the game
     def step(self, obs):
         super(Agent, self).step(obs)
+        print(repr(obs))
         np.set_printoptions(threshold=np.nan)
         self._logger.debug(self.steps)
-        print(len([unit for unit in obs.observation.feature_units if unit.unit_type == TerranUnits.SCV.value]))
+        #print(len([unit for unit in obs.observation.feature_units if unit.unit_type == TerranUnits.SCV.value]))
         return actions.FUNCTIONS.no_op()
 
     ## This function is called to reset the episode
