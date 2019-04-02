@@ -1,8 +1,16 @@
 import logging, numpy as np
 from pysc2.agents.base_agent import BaseAgent
 from pysc2.lib import actions, features
-from UnitType import TerranUnits
 
+try:
+    from UnitType import TerranUnits
+except ImportError as imp:
+    try:
+        from src.UnitType import TerranUnits
+    except ImportError as imp:
+        print(repr(imp))
+        import sys
+        sys.exit(1)
 # List of known unit types. It is taken from:
 # https://github.com/Blizzard/s2client-api/blob/master/include/sc2api/sc2_typeenums.h
 

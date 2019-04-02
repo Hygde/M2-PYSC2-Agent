@@ -4,11 +4,15 @@ from pysc2.lib import actions, features, units
 from absl import app
 import random
 
+import numpy
+
+# How to run:
+# python -m pysc2.bin.agent --agent src.zergrush.ZergAgent --map Simple64 --agent_race zerg --use_feature_units True
 
 class ZergAgent(base_agent.BaseAgent):
     def __init__(self):
         super(ZergAgent, self).__init__()
-
+        #numpy.set_printoptions(threshold=numpy.nan)
         self.attack_coordinates = None
 
     def unit_type_is_selected(self, obs, unit_type):
@@ -23,8 +27,8 @@ class ZergAgent(base_agent.BaseAgent):
         return False
 
     def get_units_by_type(self, obs, unit_type):
-        print("get_units_by_type:" + repr([unit for unit in obs.observation.feature_units
-                if unit.unit_type == unit_type]))
+        # print("get_units_by_type:" + repr([unit for unit in obs.observation.feature_units
+        #         if unit.unit_type == unit_type]))
         return [unit for unit in obs.observation.feature_units
                 if unit.unit_type == unit_type]
 
@@ -34,16 +38,18 @@ class ZergAgent(base_agent.BaseAgent):
     def step(self, obs):
         super(ZergAgent, self).step(obs)
 
+        #print(obs.observation)
+
         if obs.first():
             player_y, player_x = (obs.observation.feature_minimap.player_relative ==
                                   features.PlayerRelative.SELF).nonzero()
             xmean = player_x.mean()
             ymean = player_y.mean()
 
-            print("xmean = " + repr(xmean))
-            print("ymean = " + repr(ymean))
-            print("player x = " + repr(player_x))
-            print("player y = " + repr(player_y))
+            # print("xmean = " + repr(xmean))
+            # print("ymean = " + repr(ymean))
+            # print("player x = " + repr(player_x))
+            # print("player y = " + repr(player_y))
 
             if xmean <= 31 and ymean <= 31:
                 self.attack_coordinates = (39, 45)
