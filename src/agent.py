@@ -1,8 +1,8 @@
 import logging, numpy as np
 from pysc2.agents.base_agent import BaseAgent
-from pysc2.lib import actions, features
-from UnitType import TerranUnits
-
+from pysc2.lib import actions, features, units
+from time import sleep
+from Actions import SelectAction
 # List of known unit types. It is taken from:
 # https://github.com/Blizzard/s2client-api/blob/master/include/sc2api/sc2_typeenums.h
 
@@ -16,6 +16,7 @@ class Agent(BaseAgent):
     def __init__(self):
         super(Agent, self).__init__()
         self.__initLogger()
+        np.set_printoptions(threshold=np.nan)
 
     """PRIVATE"""
 
@@ -43,10 +44,16 @@ class Agent(BaseAgent):
     # @param obs is all the available observation of the current state of the game
     def step(self, obs):
         super(Agent, self).step(obs)
-        np.set_printoptions(threshold=np.nan)
+        result = actions.FUNCTIONS.no_op()
         self._logger.debug(self.steps)
-        print(len([unit for unit in obs.observation.feature_units if unit.unit_type == TerranUnits.SCV.value]))
-        return actions.FUNCTIONS.no_op()
+        if self.steps == 1:
+            act = SelectAction(units.Terran.SCV, 1)
+            result = act.action(obs)
+        
+        self._logger.debug(obs.observation['single_select'])
+        self._logger.debug(obs.observation['multi_select'])
+        input()
+        return result
 
     ## This function is called to reset the episode
     def reset(self):
