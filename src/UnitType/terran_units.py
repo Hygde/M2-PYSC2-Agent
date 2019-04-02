@@ -1,9 +1,9 @@
-from enum import Enum
+from enum import IntEnum
 
 # SRC :
 # https://github.com/Blizzard/s2client-api/blob/master/include/sc2api/sc2_typeenums.h
 
-class TerranUnits(Enum):
+class TerranUnits(IntEnum):
     ARMORY = 29# CANCEL, HALT, CANCEL_LAST, RESEARCH_TERRANSHIPWEAPONS, RESEARCH_TERRANVEHICLEANDSHIPPLATING, RESEARCH_TERRANVEHICLEWEAPONS
     AUTOTURRET = 31# SMART, STOP, ATTACK
     BANSHEE = 55# SMART, MOVE, PATROL, HOLDPOSITION, STOP, ATTACK, BEHAVIOR_CLOAKON, BEHAVIOR_CLOAKOFF
