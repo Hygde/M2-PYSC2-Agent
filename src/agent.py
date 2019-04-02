@@ -9,7 +9,7 @@ from Actions import SelectAction
 # How to run:
 # python -m pysc2.bin.agent --agent agent.Agent --map Simple64 --agent_race terran --use_feature_units True
 
-## This is a protoss agent
+## This agent inherits of PySC2's BaseAgent class
 class Agent(BaseAgent):
 
     ## Constructor
