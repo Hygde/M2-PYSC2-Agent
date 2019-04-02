@@ -46,7 +46,7 @@ Here is the list of the goals:
 
 * Fonctions (Implicitly implement highest queue priority):
     * Select Unit (Coordinates)
-    * Select Group Unit (Mono) 
+    * Select Group Unit (Mono / Local & Global) 
         * Select all of unit type
         * Select amount of unit type
         * Selection with zone of units (rectangular)
@@ -63,6 +63,15 @@ Here is the list of the goals:
     * Attack with selected units:
         * Coordinates
         * Unit
+    * Get map's width and height
+        * Pixel
+        * nb_screen(Relative to screen size)
+    * Local to Global / G2L (Coordinates)
+    * Get map's key position.
+        * Ramp
+        * Base
+    * Send scout (move queued)
+    * Use ability
 
 ## Counter Rush
 
