@@ -21,6 +21,10 @@ class SelectAction(SC2Action):
         coord_xy = [coord_yx.x, coord_yx.y]
         return actions.FUNCTIONS.select_point("select", coord_xy)
 
+    def __select_all_type(self, coord_yx):
+        coord_xy = [coord_yx.x, coord_yx.y]
+        return actions.FUNCTIONS.select_point("select_all_type", coord_xy)
+
     ## This function performs a selection of N units
     # @param obs defines the observation of the current state of the game
     def action(self, obs):
@@ -29,4 +33,5 @@ class SelectAction(SC2Action):
             units = self.__getUnitsOfType(obs, self._unit_type)
             if self._n_select == 1: result = self.__select_single(units[0])
             elif self._n_select > 1: pass
+            elif self._n_select == -1:result = self.__select_all_type(units[0])
         return result
