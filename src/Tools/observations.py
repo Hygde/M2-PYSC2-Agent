@@ -1,5 +1,5 @@
-from pysc2.lib import features, actions
-import logging
+from pysc2.lib import features, actions, units
+import logging, numpy as np
 
 class Observations:
     def __init__(self):
@@ -10,4 +10,14 @@ class Observations:
     def getPlayerPosition(self, obs):
         #This function should be run when the agent is launched
         player_y, player_x = (obs.observation.feature_minimap.player_relative == features.PlayerRelative.SELF).nonzero()
-        return player_x.mean(), player_y.mean()
+        player_x, player_y = player_x.mean(), player_y.mean()
+        self._logger.debug([player_x, player_y])
+        return player_x, player_y
+
+    ## This function return the position of the camera
+    # @param obs is the handler of the current state of the game
+    def getCameraPosition(self, obs):
+        ycam, xcam = np.array(obs.observation.feature_minimap.camera.nonzero())
+        xcam, ycam = xcam.mean(), ycam.mean()
+        self._logger.debug([xcam, ycam])
+        return xcam, ycam
