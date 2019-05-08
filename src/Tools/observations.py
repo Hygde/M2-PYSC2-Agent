@@ -1,5 +1,6 @@
 from pysc2.lib import features, actions, units
 import logging, numpy as np
+from ._estimator import _Estimator
 
 class Observations:
     def __init__(self):
@@ -21,3 +22,10 @@ class Observations:
         xcam, ycam = xcam.mean(), ycam.mean()
         self._logger.debug([xcam, ycam])
         return xcam, ycam
+
+    def getMineralPosition(self, obs):
+        ydata, xdata = np.array(obs.observation.feature_minimap.player_relative == features.PlayerRelative.NEUTRAL).nonzero()
+        dataset = np.array([el for el in zip(xdata, ydata)])
+        result = _Estimator().getPositionOfMinerals(dataset)
+        self._logger.debug(result)
+        return result
