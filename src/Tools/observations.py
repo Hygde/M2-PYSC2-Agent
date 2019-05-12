@@ -15,7 +15,7 @@ class Observations:
         self._logger.debug([player_x, player_y])
         return player_x, player_y
 
-    ## This function return the position of the camera
+    ## This function returns the position of the camera
     # @param obs is the handler of the current state of the game
     def getCameraPosition(self, obs):
         ycam, xcam = np.array(obs.observation.feature_minimap.camera.nonzero())
@@ -23,6 +23,8 @@ class Observations:
         self._logger.debug([xcam, ycam])
         return xcam, ycam
 
+    ## This function returns the postion of minerals
+    # @param obs is the handler of the current state of the game
     def getMineralPosition(self, obs):
         ydata, xdata = np.array(obs.observation.feature_minimap.player_relative == features.PlayerRelative.NEUTRAL).nonzero()
         dataset = np.array([el for el in zip(xdata, ydata)])
