@@ -35,4 +35,6 @@ class Observations:
     ## This function returns True if the starting base is on the top side of the map
     # @param initial_camera_position defines the initial position of the camera
     def isOnTop(self, initial_camera_position):
-        return True if initial_camera_position[1] < 32 else False
+        result = True if initial_camera_position[1] < 32 else False
+        self._logger.debug(result)
+        return result
