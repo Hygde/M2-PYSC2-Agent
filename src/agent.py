@@ -1,7 +1,8 @@
 import logging, numpy as np
 from pysc2.agents.base_agent import BaseAgent
 from pysc2.lib import actions, features, units
-from Actions import SelectAction
+from Actions import CreateBase
+from Tools import Observations
 
 # List of known unit types. It is taken from:
 # https://github.com/Blizzard/s2client-api/blob/master/include/sc2api/sc2_typeenums.h
@@ -16,6 +17,7 @@ class Agent(BaseAgent):
     def __init__(self):
         super(Agent, self).__init__()
         self.__initLogger()
+        self._mobs = Observations()
         np.set_printoptions(threshold=np.nan)
 
     """PRIVATE"""
@@ -36,25 +38,30 @@ class Agent(BaseAgent):
         ch.setFormatter(formatter)
         self._logger.handlers[0] = ch
 
+    ## This function initializes the agent
+    # @param obs is the handler of the current state of the game
+    def __initAgent(self, obs):
+        self._logger.info("initializing the agent")
+        self._initial_camera_position = self._mobs.getCameraPosition(obs)
+        self._onTop = self._mobs.isOnTop(self._initial_camera_position)
+        self._act = CreateBase(self._initial_camera_position, self._onTop)
+
     """PROTECTED"""
 
-    """PUBLIC"""        
+    """PUBLIC"""
 
     ## This function is called at each step of the game
     # @param obs is all the available observation of the current state of the game
     def step(self, obs):
         super(Agent, self).step(obs)
         result = actions.FUNCTIONS.no_op()
-        self._logger.debug(self.steps)
-        if self.steps == 1:
-            act = SelectAction(units.Terran.SCV, 1)
-            result = act.action(obs)
-        
-        self._logger.debug(obs.observation['single_select'])
-        self._logger.debug(obs.observation['multi_select'])
-        input()
+
+        if self.steps == 1:self.__initAgent(obs)
+        if not self._act.isFinished():result = self._act.action(obs)
+
         return result
 
     ## This function is called to reset the episode
     def reset(self):
         super(Agent, self).reset()
+        self.steps = 0
