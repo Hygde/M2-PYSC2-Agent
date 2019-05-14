@@ -2,12 +2,15 @@ from sklearn.cluster import KMeans
 import numpy as np
 from matplotlib import pyplot as plt
 
+## This class estimates the number of clusters in datasets using Elbow method
 class _Estimator:
     ## Contructor of the _Estimator class
     # @param min_cat is an integer value which defines the minimal number of categories
     # @param max_cat is an integer value which defines the maximal number of categories
-    def __init__(self, max_cat=20):
-        self._min_cat = 2
+    def __init__(self, min_cat=2, max_cat=20):
+        ## defines the minimal number of categories
+        self._min_cat = min_cat
+        ## defines the maximum number of categories
         self._max_cat = max_cat
 
     ## This function estimates the number of clusters of the dataset

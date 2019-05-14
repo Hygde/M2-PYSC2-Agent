@@ -7,6 +7,7 @@ from .traincommandcenterunits import TrainCommandCenterUnits
 from .movescreen import MoveScreen
 from .movecamera import MoveCamera
 
+## This class describes the steps to build the base
 class CreateBase(SC2Action):
     def __init__(self, initial_camera_position, top):
         super(CreateBase, self).__init__()
@@ -15,13 +16,8 @@ class CreateBase(SC2Action):
         self._initial_camera_position = initial_camera_position
         self._act = TrainCommandCenterUnits(1)
 
-    def _moveCamera(self, coord_xy=None):
-        if coord_xy == None:
-            result = actions.FUNCTIONS.move_camera([28.5, 23.5])
-            if not self._top:result = actions.FUNCTIONS.move_camera([33.5, 48.5])
-        else:result = actions.FUNCTIONS.move_camera(coord_xy)
-        return result
-
+    ## This function constructs the base
+    # @param obs is the handler of the current state of the game
     def action(self, obs):
         result = super(CreateBase, self).action(obs)
         if self._act.isFinished():
@@ -34,7 +30,6 @@ class CreateBase(SC2Action):
             elif self._iteration == 6:result = self._act = MoveCamera(self._initial_camera_position)
             else:
                 minerals =  np.array([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == units.Neutral.MineralField])
-                self._act = MoveScreen(minerals[0])
+                self._act = MoveScreen(minerals[0], True)
         if not self._act.isFinished():result = self._act.action(obs)
-        #input(self._iteration)
         return result

@@ -2,6 +2,7 @@ from pysc2.lib import features, actions, units
 import logging, numpy as np
 from ._estimator import _Estimator
 
+## Tool class which gathers some utility function
 class Observations:
     def __init__(self):
         self._logger = logging.getLogger("ObservationsLogger")

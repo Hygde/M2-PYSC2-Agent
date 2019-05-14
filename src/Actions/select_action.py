@@ -4,9 +4,13 @@ from pysc2.lib import features, actions
 import numpy as np
 from enum import IntEnum
 
+## This class defines the different selection type
 class SelectType(IntEnum):
+    ## Selects only on unit
     SINGLE = 0
+    ## Selects all the units of a type
     ALL_TYPE = 1
+    ## Selects the army ignoring the unit type
     ARMY = 2
 
 ## This class defines the way to select N units
