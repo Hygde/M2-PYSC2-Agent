@@ -3,16 +3,17 @@ from pysc2.lib import units, actions
 from .sc2action import SC2Action
 from .builder import Builder, BFUNCID
 from .select_action import SelectAction, SelectType
-from .traincommandcenterunits import TrainCommandCenterUnits
-from .movescreen import MoveScreen
 from .movecamera import MoveCamera
+from .movescreen import MoveScreen
+from .traincommandcenterunits import TrainCommandCenterUnits
+from .trainbarracksunits import TrainBarracksUnits 
 
 ## This class describes the steps to build the base
 class CreateBase(SC2Action):
     def __init__(self, initial_camera_position, top):
         super(CreateBase, self).__init__()
         self._top = top
-        self._duration = 7
+        self._duration = 10
         self._initial_camera_position = initial_camera_position
         self._act = TrainCommandCenterUnits(1)
 
@@ -27,7 +28,9 @@ class CreateBase(SC2Action):
             elif self._iteration == 3:self._act = Builder(BFUNCID.SUPPLYDEPOT, [44,30] if self._top else [12, 28], self._NOT_QUEUED)
             elif self._iteration == 4:self._act = Builder(BFUNCID.BARRACKS, [43,38] if self._top else [21, 30], self._QUEUED)
             elif self._iteration == 5:self._act = Builder(BFUNCID.SUPPLYDEPOT, [54,40] if self._top else [22, 38], self._QUEUED)
-            elif self._iteration == 6:result = self._act = MoveCamera(self._initial_camera_position)
+            elif self._iteration == 6:self._act = TrainBarracksUnits(SelectType.SINGLE, units.Terran.Marine, 5)
+            elif self._iteration == 7:self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)            
+            elif self._iteration == 8:result = self._act = MoveCamera(self._initial_camera_position)
             else:
                 minerals =  np.array([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == units.Neutral.MineralField])
                 self._act = MoveScreen(minerals[0], True)
