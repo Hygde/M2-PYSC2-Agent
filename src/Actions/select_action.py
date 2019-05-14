@@ -42,9 +42,11 @@ class SelectAction(SC2Action):
     def action(self, obs):
         result = super(SelectAction, self).action(obs)#return no_op()
         units = self.__getUnitsOfType(obs, self._unit_type)
-        if self._iteration == 0:
+        if len(units):
             if self._kind == SelectType.SINGLE:result = self.__select_single(units[0])
             elif self._kind == SelectType.ALL_TYPE:result = self.__select_all_type(units[0])
-            elif self._kind == SelectType.ARMY:result = self.__select_army()
-        self._iteration += 1
+            self._iteration += 1
+        elif self._kind == SelectType.ARMY and actions.select_army in obs.observation.available_actions:
+            result = self.__select_army()
+            self._iteration += 1
         return result

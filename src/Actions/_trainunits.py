@@ -5,10 +5,9 @@ from pysc2.lib import actions
 
 class _TrainUnits(SC2Action):
 
-    def __init__(self, building, select_type, ntrain):
+    def __init__(self, ntrain):
         super(_TrainUnits, self).__init__()
-        self._selector = SelectAction(building, select_type)
-        self._duration = 2
+        self._duration = 1
         self._ntrain = ntrain
 
     def _setRallyPoint(self, coord_xy):

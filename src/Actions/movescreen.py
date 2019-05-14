@@ -20,5 +20,4 @@ class MoveScreen(SC2Action):
             print((actions.FUNCTIONS.Move_screen.id in obs.observation.available_actions))
             result = actions.FUNCTIONS.Move_screen(self._queued_state, self._moveto_xy)
             self._iteration += 1
-            input("movescreen")
         return result
