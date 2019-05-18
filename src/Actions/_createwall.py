@@ -4,7 +4,7 @@ from .builder import Builder, BFUNCID
 from .select_action import SelectAction, SelectType
 from .movecamera import MoveCamera
 from .movescreen import MoveScreen
-from .TrainUnits import TrainBarracksUnits 
+from .TrainUnits import TrainUnits
 from .harvest import Harvest
 
 ## This class describes the steps to build the base
@@ -27,7 +27,7 @@ class _CreateWall(SC2Action):
             elif self._iteration == 3:self._act = Builder(BFUNCID.BARRACKS, [43,38] if self._top else [37, 30], self._QUEUED)
             elif self._iteration == 4:self._act = Builder(BFUNCID.SUPPLYDEPOT, [54,40] if self._top else [39, 39], self._QUEUED)
             elif self._iteration == 5:self._act = SelectAction(units.Terran.Barracks, SelectType.SINGLE)
-            elif self._iteration == 6:self._act = TrainBarracksUnits(units.Terran.Marine, 5)
+            elif self._iteration == 6:self._act = TrainUnits(units.Terran.Marine, 5)
             elif self._iteration == 7:self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)
             elif self._iteration == 8:result = self._act = MoveCamera(self._initial_camera_position)
             else:self._act = Harvest(queued=True)

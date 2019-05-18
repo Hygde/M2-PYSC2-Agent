@@ -1,5 +1,3 @@
-from .trainbarracksunits import TrainBarracksUnits
-from .traincommandcenterunits import TrainCommandCenterUnits
+from .trainunits import TrainUnits
 
-__all__ = ["TrainBarracksUnits",
-           "TrainCommandCenterUnits"]
+__all__ = ["TrainUnits"]

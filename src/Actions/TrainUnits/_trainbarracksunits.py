@@ -2,7 +2,7 @@ from ._trainunits import _TrainUnits
 from pysc2.lib import units, actions
 
 ## This class defines the way to train barracks units
-class TrainBarracksUnits(_TrainUnits):
+class _TrainBarracksUnits(_TrainUnits):
 
     ## Constructor of the class
     # @param unit_type defines the unit to train

@@ -1,5 +1,5 @@
 from Actions import SC2Action
-from pysc2.lib import actions
+from pysc2.lib import actions, units
 
 ## Package class which defines general functions of unit training
 class _TrainUnits(SC2Action):
