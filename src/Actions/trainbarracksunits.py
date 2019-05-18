@@ -1,20 +1,27 @@
 from ._trainunits import _TrainUnits
 from pysc2.lib import units, actions
 
+## This class defines the way to train barracks units
 class TrainBarracksUnits(_TrainUnits):
 
-    def __init__(self, select_type, unit_type, ntrain):
+    ## Constructor of the class
+    # @param unit_type defines the unit to train
+    # @param ntrain defines the number of units to train
+    def __init__(self, unit_type, ntrain):
         super(TrainBarracksUnits, self).__init__(ntrain)
         self._train_func = self._getTrainFunction(unit_type)
 
+    ## This function returns the train action according to the unit_type
+    # @param unit_type defines the unit to train
     def _getTrainFunction(self, unit_type):
-        result = None
-        if unit_type == units.Terran.Marine:result = actions.FUNCTIONS.Train_Marine_quick.id
-        elif unit_type == units.Terran.Marauder: result = actions.FUNCTIONS.Train_Marauder_quick.id
+        result = actions.FUNCTIONS.Train_Marine_quick.id
+        if unit_type == units.Terran.Marauder: result = actions.FUNCTIONS.Train_Marauder_quick.id
         elif unit_type == units.Terran.Reaper: result = actions.FUNCTIONS.Train_Reaper_quick.id
         elif unit_type == units.Terran.Ghost: result = actions.FUNCTIONS.Train_Ghost_quick.id
         return result
 
+    ## This function defines the cay to train barracks units
+    # @apram obs is the handler of the current state of the game
     def action(self, obs):
         result = super(TrainBarracksUnits, self).action(obs)
         if self._train_func in obs.observation["available_actions"]:
