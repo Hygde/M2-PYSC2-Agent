@@ -2,7 +2,7 @@ import numpy as np
 from pysc2.lib import units, actions
 from .sc2action import SC2Action
 from .select_action import SelectAction, SelectType
-from .traincommandcenterunits import TrainCommandCenterUnits
+from .TrainUnits import TrainCommandCenterUnits
 from ._createwall import _CreateWall
 
 ## This class describes the steps to build the base

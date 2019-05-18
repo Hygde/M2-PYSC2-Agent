@@ -1,6 +1,4 @@
-from .sc2action import SC2Action
-from .select_action import SelectAction
-
+from Actions import SC2Action
 from pysc2.lib import actions
 
 ## Package class which defines general functions of unit training

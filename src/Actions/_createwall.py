@@ -4,7 +4,7 @@ from .builder import Builder, BFUNCID
 from .select_action import SelectAction, SelectType
 from .movecamera import MoveCamera
 from .movescreen import MoveScreen
-from .trainbarracksunits import TrainBarracksUnits 
+from .TrainUnits import TrainBarracksUnits 
 from .harvest import Harvest
 
 ## This class describes the steps to build the base
