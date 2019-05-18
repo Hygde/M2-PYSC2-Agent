@@ -5,6 +5,7 @@ from .traincommandcenterunits import TrainCommandCenterUnits
 from .createbase import CreateBase
 from .movescreen import MoveScreen
 from .movecamera import MoveCamera
+from .harvest import Harvest
 
 __all__ = ["SC2Action",
            "SelectAction",
@@ -14,4 +15,5 @@ __all__ = ["SC2Action",
            "TrainCommandCenterUnits",
            "CreateBase",
            "MoveScreen",
-           "MoveCamera"]
+           "MoveCamera",
+           "Harvest"]
