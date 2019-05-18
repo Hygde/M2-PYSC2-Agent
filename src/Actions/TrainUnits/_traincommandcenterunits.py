@@ -1,9 +1,8 @@
 from ._trainunits import _TrainUnits
-from .select_action import SelectAction, SelectType
 from pysc2.lib import actions, units
 
 ## This class defines an easy way to train SCV
-class TrainCommandCenterUnits(_TrainUnits):
+class _TrainCommandCenterUnits(_TrainUnits):
 
     __TRAIN_SCV = actions.FUNCTIONS.Train_SCV_quick.id
 
