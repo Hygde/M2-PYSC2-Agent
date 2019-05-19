@@ -6,13 +6,14 @@ from .movecamera import MoveCamera
 from .movescreen import MoveScreen
 from .TrainUnits import TrainUnits
 from .harvest import Harvest
+from .UseAbility import UseAbility, SupplyDepotAbility
 
 ## This class describes the steps to build the base
 class _CreateWall(SC2Action):
     def __init__(self, initial_camera_position, top):
         super(_CreateWall, self).__init__()
         self._top = top
-        self._duration = 9
+        self._duration = 11
         self._initial_camera_position = initial_camera_position
         self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)
 
@@ -28,8 +29,10 @@ class _CreateWall(SC2Action):
             elif self._iteration == 4:self._act = Builder(BFUNCID.SUPPLYDEPOT, [54,40] if self._top else [39, 39], self._QUEUED)
             elif self._iteration == 5:self._act = SelectAction(units.Terran.Barracks, SelectType.SINGLE)
             elif self._iteration == 6:self._act = TrainUnits(units.Terran.Marine, 5)
-            elif self._iteration == 7:self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)
-            elif self._iteration == 8:result = self._act = MoveCamera(self._initial_camera_position)
-            else:self._act = Harvest(queued=True)
+            elif self._iteration == 7:self._act = SelectAction(units.Terran.SupplyDepot, SelectType.SINGLE, coord_xy=[44,30] if self._top else [28, 28])
+            elif self._iteration == 8:self._act = UseAbility(SupplyDepotAbility.LOWER)
+            elif self._iteration == 9:self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)
+            elif self._iteration == 10:result = self._act = MoveCamera(self._initial_camera_position)
+            else:self._act = Harvest(units.Neutral.MineralField, queued=True)
         if not self._act.isFinished():result = self._act.action(obs)
         return result
