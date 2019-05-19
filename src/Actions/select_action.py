@@ -20,7 +20,7 @@ class SelectAction(SC2Action):
     ## Constructor of SelectAction class
     # @param unit_type is the type of units to select
     # @param n_select defines the number of units to select
-    def __init__(self, unit_type, kind=None):
+    def __init__(self, unit_type, kind):
         super(SelectAction, self).__init__()
         self._duration = 1
         self._unit_type = unit_type
