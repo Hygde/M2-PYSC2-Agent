@@ -5,6 +5,7 @@ from enum import IntEnum
 ## enum of building function
 class BFUNCID(IntEnum):
     SUPPLYDEPOT = actions.FUNCTIONS.Build_SupplyDepot_screen.id
+    REFINERY = actions.FUNCTIONS.Build_Refinery_screen.id
     BARRACKS = actions.FUNCTIONS.Build_Barracks_screen.id
     ENGINEERINGBAY = actions.FUNCTIONS.Build_EngineeringBay_screen.id
     MISSILETURRET = actions.FUNCTIONS.Build_MissileTurret_screen.id
@@ -23,7 +24,7 @@ class Builder(SC2Action):
     # @param obs is the current state of the game
     def action(self, obs):
         result = super(Builder, self).action(obs)
-        if self._iteration == 0 and self._to_build in obs.observation["available_actions"]:
+        if self._iteration == 0 and self._to_build in obs.observation.available_actions:
             result = actions.FunctionCall(self._to_build, [self._queued, self._coord_xy])
             self._iteration += 1
         return result

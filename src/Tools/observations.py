@@ -33,6 +33,13 @@ class Observations:
         self._logger.debug(result)
         return result
 
+    ## This function returns the position of unit_type population on the screen
+    # @param obs is the handler of the current state of the game
+    # @param unit_type is the type of units to look for in the current screen
+    @staticmethod
+    def getUnitsOfType(obs, unit_type):
+        return np.array([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == unit_type and unit.is_selected == False])
+
     ## This function returns True if the starting base is on the top side of the map
     # @param initial_camera_position defines the initial position of the camera
     def isOnTop(self, initial_camera_position):

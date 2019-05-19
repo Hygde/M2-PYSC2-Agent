@@ -20,12 +20,12 @@ class SelectAction(SC2Action):
     ## Constructor of SelectAction class
     # @param unit_type is the type of units to select
     # @param n_select defines the number of units to select
-    def __init__(self, unit_type, kind, coord_xy=None):
+    def __init__(self, unit_type, kind, coord_xy=np.array([])):
         super(SelectAction, self).__init__()
         self._duration = 1
         self._unit_type = unit_type
         self._kind = kind
-        self._units = np.array([]) if coord_xy == None else np.array([coord_xy])
+        self._units = np.array([]) if type(coord_xy) == type(None) else np.array([coord_xy])
 
     def __getUnitsOfType(self, obs, unit_type):
         return np.array([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == unit_type and unit.is_selected == False])
