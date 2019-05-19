@@ -13,7 +13,7 @@ class _CreateWall(SC2Action):
     def __init__(self, initial_camera_position, top):
         super(_CreateWall, self).__init__()
         self._top = top
-        self._duration = 11
+        self._duration = 15
         self._initial_camera_position = initial_camera_position
         self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)
 
@@ -33,6 +33,12 @@ class _CreateWall(SC2Action):
             elif self._iteration == 8:self._act = UseAbility(SupplyDepotAbility.LOWER)
             elif self._iteration == 9:self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)
             elif self._iteration == 10:result = self._act = MoveCamera(self._initial_camera_position)
-            else:self._act = Harvest(units.Neutral.MineralField, queued=True)
+            elif self._iteration == 11:self._act = Harvest(units.Neutral.MineralField, queued=True)
+            elif self._iteration == 12:self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5])
+            elif self._iteration == 13:self._act = SelectAction(units.Terran.SupplyDepot, SelectType.SINGLE, coord_xy=[44,30] if self._top else [28, 28])
+            elif self._iteration == 14:
+                if len([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == units.Terran.SCV]) == 0:self._act = UseAbility(SupplyDepotAbility.RAISE)
+                else: self._iteration -= 1
+            else:self._act = MoveCamera(self._initial_camera_position)
         if not self._act.isFinished():result = self._act.action(obs)
         return result
