@@ -55,6 +55,7 @@ class Agent(BaseAgent):
     def step(self, obs):
         super(Agent, self).step(obs)
         result = actions.FUNCTIONS.no_op()
+        self._logger.debug(obs.observation.available_actions)
 
         if self.steps == 1:self.__initAgent(obs)
         if not self._act.isFinished():result = self._act.action(obs)

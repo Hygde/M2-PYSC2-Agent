@@ -20,11 +20,12 @@ class SelectAction(SC2Action):
     ## Constructor of SelectAction class
     # @param unit_type is the type of units to select
     # @param n_select defines the number of units to select
-    def __init__(self, unit_type, kind=None):
+    def __init__(self, unit_type, kind, coord_xy=None):
         super(SelectAction, self).__init__()
         self._duration = 1
         self._unit_type = unit_type
         self._kind = kind
+        self._units = np.array([]) if coord_xy == None else np.array([coord_xy])
 
     def __getUnitsOfType(self, obs, unit_type):
         return np.array([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == unit_type and unit.is_selected == False])
@@ -41,10 +42,11 @@ class SelectAction(SC2Action):
     # @param obs defines the observation of the current state of the game
     def action(self, obs):
         result = super(SelectAction, self).action(obs)#return no_op()
-        units = self.__getUnitsOfType(obs, self._unit_type)
-        if len(units):
-            if self._kind == SelectType.SINGLE:result = self.__select_single(units[0])
-            elif self._kind == SelectType.ALL_TYPE:result = self.__select_all_type(units[0])
+        if self._units.size == 0:self._units = self.__getUnitsOfType(obs, self._unit_type)
+        self._logger.debug(self._units)
+        if self._units.size > 0:
+            if self._kind == SelectType.SINGLE:result = self.__select_single(self._units[0])
+            elif self._kind == SelectType.ALL_TYPE:result = self.__select_all_type(self._units[0])
             self._iteration += 1
         elif self._kind == SelectType.ARMY and actions.select_army in obs.observation.available_actions:
             result = self.__select_army()
