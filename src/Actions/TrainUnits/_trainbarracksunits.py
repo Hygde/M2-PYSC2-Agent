@@ -8,7 +8,7 @@ class _TrainBarracksUnits(_TrainUnits):
     # @param unit_type defines the unit to train
     # @param ntrain defines the number of units to train
     def __init__(self, unit_type, ntrain):
-        super(TrainBarracksUnits, self).__init__(ntrain)
+        super(_TrainBarracksUnits, self).__init__(ntrain)
         self._train_func = self._getTrainFunction(unit_type)
 
     ## This function returns the train action according to the unit_type
@@ -23,7 +23,7 @@ class _TrainBarracksUnits(_TrainUnits):
     ## This function defines the cay to train barracks units
     # @apram obs is the handler of the current state of the game
     def action(self, obs):
-        result = super(TrainBarracksUnits, self).action(obs)
+        result = super(_TrainBarracksUnits, self).action(obs)
         if self._train_func in obs.observation["available_actions"]:
             self._logger.debug("Adding one unit to training queue")
             result = actions.FunctionCall(self._train_func, [self._NOT_QUEUED])
