@@ -1,3 +1,4 @@
+import numpy as np
 from pysc2.lib import units
 from .sc2action import SC2Action
 from .builder import Builder, BFUNCID
@@ -10,9 +11,10 @@ from Tools import Observations as mobs
 class _Vespenes(SC2Action):
 
     ## Constructor of the class
-    def __init__(self):
+    def __init__(self, top):
         super(_Vespenes, self).__init__()
-        self._duration = 13
+        self._duration = 12
+        self._top = top
         self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)
 
     ## This function checks if the building of selected rafinery is completed
@@ -44,7 +46,10 @@ class _Vespenes(SC2Action):
                 if len(obs.observation.build_queue) != 0:self._iteration -= 1
                 else:self._act = RallyPoint(units.Terran.CommandCenter, self._geyser_position[1])
             elif self._iteration == 10:self._act = TrainUnits(units.Terran.SCV, 2)
+            else:
+                if len(obs.observation.build_queue) != 0:self._iteration -= 1
+                else:
+                    pos = np.array([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == units.Terran.CommandCenter]) + (np.array([10,10]) if self._top else np.array([-10,-10]))
+                    self._act = RallyPoint(units.Terran.CommandCenter, pos[0], queued=False)
         if not self._act.isFinished():result = self._act.action(obs)
         return result
-
-
