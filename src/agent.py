@@ -1,4 +1,4 @@
-import logging, numpy as np
+import logging, numpy as np, sys
 from pysc2.agents.base_agent import BaseAgent
 from pysc2.lib import actions, features, units
 from Actions import CreateBase
@@ -18,7 +18,7 @@ class Agent(BaseAgent):
         super(Agent, self).__init__()
         self.__initLogger()
         self._mobs = Observations()
-        np.set_printoptions(threshold=np.nan)
+        np.set_printoptions(threshold=sys.maxsize)
 
     """PRIVATE"""
 
