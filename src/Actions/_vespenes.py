@@ -49,7 +49,7 @@ class _Vespenes(SC2Action):
             else:
                 if len(obs.observation.build_queue) != 0:self._iteration -= 1
                 else:
-                    pos = np.array([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == units.Terran.CommandCenter]) + (np.array([10,10]) if self._top else np.array([-10,-10]))
+                    pos = np.array([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == units.Terran.CommandCenter]) + (np.array([10,0]) if self._top else np.array([-10,-10]))
                     self._act = RallyPoint(units.Terran.CommandCenter, pos[0], queued=False)
         if not self._act.isFinished():result = self._act.action(obs)
         return result
