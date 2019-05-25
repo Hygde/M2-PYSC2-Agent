@@ -10,6 +10,8 @@ class BFUNCID(IntEnum):
     ENGINEERINGBAY = actions.FUNCTIONS.Build_EngineeringBay_screen.id
     MISSILETURRET = actions.FUNCTIONS.Build_MissileTurret_screen.id
     BUNKER = actions.FUNCTIONS.Build_Bunker_screen.id
+    FACTORY = actions.FUNCTIONS.Build_Factory_screen.id
+    ARMORY = actions.FUNCTIONS.Build_Armory_screen.id
 
 ## Defines the way to build a batiment
 class Builder(SC2Action):
