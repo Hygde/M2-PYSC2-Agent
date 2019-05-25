@@ -23,6 +23,6 @@ class CreateBase(SC2Action):
             self._iteration += 1
             if self._iteration == 1:self._act = TrainUnits(units.Terran.SCV, 1)
             elif self._iteration == 2:self._act = _CreateWall(self._initial_camera_position, self._top)
-            elif self._iteration == 3:self._act = _Vespenes()
+            elif self._iteration == 3:self._act = _Vespenes(self._top)
         if not self._act.isFinished():result = self._act.action(obs)
         return result
