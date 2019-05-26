@@ -1,7 +1,7 @@
 import logging, numpy as np, sys
 from pysc2.agents.base_agent import BaseAgent
 from pysc2.lib import actions, features, units
-from Actions import CreateBase
+from Actions import CreateBase, Attack
 from Tools import Observations
 
 # List of known unit types. It is taken from:
@@ -58,6 +58,8 @@ class Agent(BaseAgent):
         self._logger.debug(obs.observation.available_actions)
 
         if self.steps == 1:self.__initAgent(obs)
+        elif self._act.isFinished():self._act = Attack(self._onTop, [28.5, 23.5] if self._onTop else [30.5, 48.5])
+
         if not self._act.isFinished():result = self._act.action(obs)
 
         return result
