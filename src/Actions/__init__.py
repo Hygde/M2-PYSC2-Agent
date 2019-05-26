@@ -5,6 +5,7 @@ from .createbase import CreateBase
 from .movescreen import MoveScreen
 from .movecamera import MoveCamera
 from .harvest import Harvest
+from .attack import Attack
 
 __all__ = ["SC2Action",
            "SelectAction",
@@ -14,4 +15,5 @@ __all__ = ["SC2Action",
            "CreateBase",
            "MoveScreen",
            "MoveCamera",
-           "Harvest"]
+           "Harvest",
+           "Attack"]
