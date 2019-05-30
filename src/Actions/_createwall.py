@@ -42,7 +42,7 @@ class _CreateWall(SC2Action):
                 if len([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == units.Terran.SCV]) == 0:self._act = UseAbility(SupplyDepotAbility.RAISE)
                 else: self._iteration -= 1
             elif self._iteration == 16:self._act = SelectAction(units.Terran.Barracks, SelectType.SINGLE)
-            elif self._iteration == 17:self._act = TrainUnits(units.Terran.Marine, 5)
+            elif self._iteration == 17:self._act = TrainUnits(units.Terran.Marine, 2)
             else:self._act = MoveCamera(self._initial_camera_position)
         if not self._act.isFinished():result = self._act.action(obs)
         return result
