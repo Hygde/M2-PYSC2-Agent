@@ -22,7 +22,7 @@ class Observations:
         ycam, xcam = np.array(obs.observation.feature_minimap.camera.nonzero())
         xcam, ycam = xcam.mean(), ycam.mean()
         self._logger.debug([xcam, ycam])
-        return xcam, ycam
+        return np.array([xcam, ycam])
 
     ## This function returns the postion of minerals
     # @param obs is the handler of the current state of the game
