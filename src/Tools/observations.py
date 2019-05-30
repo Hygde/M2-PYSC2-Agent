@@ -22,7 +22,7 @@ class Observations:
         ycam, xcam = np.array(obs.observation.feature_minimap.camera.nonzero())
         xcam, ycam = xcam.mean(), ycam.mean()
         self._logger.debug([xcam, ycam])
-        return xcam, ycam
+        return np.array([xcam, ycam])
 
     ## This function returns the postion of minerals
     # @param obs is the handler of the current state of the game
@@ -46,3 +46,16 @@ class Observations:
         result = True if initial_camera_position[1] < 32 else False
         self._logger.debug(result)
         return result
+
+    ## This function returns the enemy race. -1:Error, 0:Terran, 1:Zerg, 2:Protoss
+    # @param obs is the handler of the current state of the game
+    @staticmethod
+    def getEnemyRace(obs):
+        enemies = [unit.unit_type for unit in obs.observation.feature_screen if unit.player_relative == 4]
+        result = -1
+        if len(enemies) > 0:
+            if enemies[0] in units.Terran:result = 0
+            elif enemies[0] in units.Zerg:result = 1
+            elif enemies[0] in units.Protoss:result = 2
+        return result
+
