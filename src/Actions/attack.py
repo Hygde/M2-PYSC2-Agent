@@ -52,7 +52,7 @@ class Attack(SC2Action):
     def _terranOrder(self, enemies):
         self._logger.debug("terran")
         result = np.array([[e[1], e[2]] for e in enemies 
-            if (e[0] >= Terran.SCV.value and e[0] != Terran.OrbitalCommand.value and e[0] != Terran.Medivac.value)
+            if (e[0] > Terran.SCV.value and e[0] != Terran.OrbitalCommand.value and e[0] != Terran.Medivac.value and e[0] != Terran.SupplyDepotLowered.value)
              or (e[0] == Terran.Bunker.value) or (Terran.AutoTurret.value <= e[0] <= Terran.SiegeTank.value)])
         if result.size == 0:np.array([[e[1], e[2]] for e in enemies if e[0] == Terran.SCV.value])
         if result.size == 0:np.array([[e[1], e[2]] for e in enemies if e[0] < Terran.SCV.value])
