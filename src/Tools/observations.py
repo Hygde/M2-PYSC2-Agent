@@ -1,4 +1,5 @@
-from pysc2.lib import features, actions, units
+from pysc2.lib import features, actions
+from pysc2.lib.units import Terran, Zerg, Protoss
 import logging, numpy as np
 from ._estimator import _Estimator
 
@@ -49,13 +50,14 @@ class Observations:
 
     ## This function returns the enemy race. -1:Error, 0:Terran, 1:Zerg, 2:Protoss
     # @param obs is the handler of the current state of the game
-    @staticmethod
-    def getEnemyRace(obs):
-        enemies = [unit.unit_type for unit in obs.observation.feature_screen if unit.player_relative == 4]
+    def getEnemyRace(self, obs):
+        index = obs.observation.feature_screen.player_relative == features.PlayerRelative.ENEMY
+        y, x = (obs.observation.feature_screen.unit_type * index).nonzero()
+        enemies = obs.observation.feature_screen.unit_type[y[0]][x[0]] if len(x) > 0 else []
         result = -1
-        if len(enemies) > 0:
-            if enemies[0] in units.Terran:result = 0
-            elif enemies[0] in units.Zerg:result = 1
-            elif enemies[0] in units.Protoss:result = 2
+        if len(x) > 0:
+            if enemies in [v.value for v in Terran]:result = 0
+            elif enemies in [v.value for v in Zerg]:result = 1
+            elif enemies in [v.value for v in Protoss]:result = 2
         return result
 

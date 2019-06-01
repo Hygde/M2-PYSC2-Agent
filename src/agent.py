@@ -42,7 +42,7 @@ class Agent(BaseAgent):
     # @param obs is the handler of the current state of the game
     def __initAgent(self, obs):
         self._logger.info("initializing the agent")
-        self._initial_camera_position = self._mobs.getCameraPosition(obs)
+        self._initial_camera_position = self._mobs.getCameraPosition(obs) + np.array([0, 2])
         self._onTop = self._mobs.isOnTop(self._initial_camera_position)
         self._act = CreateBase(self._initial_camera_position, self._onTop)
 
