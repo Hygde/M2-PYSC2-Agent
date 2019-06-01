@@ -13,7 +13,7 @@ class Attack(SC2Action):
 
     def __init__(self, top, initial_camera_position):
         super(Attack, self).__init__()
-        self._duration = 9
+        self._duration = 10
         self._top = top
         self._mobs = mobs()
         self._enemy_race = -1
@@ -28,7 +28,8 @@ class Attack(SC2Action):
 
     def _zergsOrder(self, enemies):
         self._logger.debug("zerg")
-        result = np.array([[e[1], e[2]] for e in enemies if (e[0] == Zerg.SpineCrawler.value) or e[0] > Zerg.Drone.value and e[0] != Zerg.Overlord.value and e[0] != Zerg.Larva.value])
+        result = np.array([[e[1], e[2]] for e in enemies if (e[0] == Zerg.SpineCrawler.value) or e[0] > Zerg.Drone.value
+         and e[0] != Zerg.Overlord.value and e[0] != Zerg.Overseer.value and e[0] != Zerg.Larva.value])
         if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if e[0] == Zerg.Drone.value])
         if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if e[0] < Zerg.Drone.value])
         return result
@@ -95,11 +96,17 @@ class Attack(SC2Action):
         if (len(y) == 0) or (self._enemy_race < 0):self._iteration -= 1
         #else:input("self._enemy_race ="+str(self._enemy_race))
 
+    def _minimapAttack(self, obs):
+        result = actions.FUNCTIONS.no_op()
+        if len(obs.observation.multi_select) > 0 or len(obs.observation.single_select) > 0:
+            y, x = (obs.observation.feature_minimap.player_relative == 4).nonzero()
+            if y.size and actions.FUNCTIONS.Attack_minimap.id in obs.observation.available_actions:
+                result = actions.FUNCTIONS.Attack_minimap("now", [x[0], y[0]])
+                self._iteration -= 1
+        return result
+
     def action(self,obs):
         result = super(Attack, self).action(obs)
-        if self._iteration > 5:
-            self._logger.debug([[u.x, u.y] for u in obs.observation.feature_units if not u.is_selected])
-            #input(self._iteration)
         if self._act.isFinished():
             self._iteration += 1
             if self._iteration == 1:self._act = TrainUnits(Terran.Reaper, 10)
@@ -108,7 +115,8 @@ class Attack(SC2Action):
             elif self._iteration == 4:self._act = MoveScreen([32,32])
             elif self._iteration == 6:self._waitArmy(obs)
             elif self._iteration == 7:result = self.__attack(obs)
-            elif self._iteration == 8:self._act = MoveCamera(self._initial_camera_position)
+            elif self._iteration == 8:result = self._minimapAttack(obs)
+            elif self._iteration == 9:self._act = MoveCamera(self._initial_camera_position)
         if not self._act.isFinished():result = self._act.action(obs)
 
         return result
