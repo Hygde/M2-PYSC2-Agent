@@ -28,7 +28,7 @@ class Attack(SC2Action):
 
     def _zergsOrder(self, enemies):
         self._logger.debug("zerg")
-        result = np.array([[e[1], e[2]] for e in enemies if e[0] > Zerg.Drone.value and e[0] != Zerg.Overlord.value and e[0] != Zerg.Larva.value])
+        result = np.array([[e[1], e[2]] for e in enemies if (e[0] == Zerg.SpineCrawler.value) or e[0] > Zerg.Drone.value and e[0] != Zerg.Overlord.value and e[0] != Zerg.Larva.value])
         if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if e[0] == Zerg.Drone.value])
         if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if e[0] < Zerg.Drone.value])
         return result
