@@ -111,10 +111,11 @@ class Attack(SC2Action):
     ## This is the way the minimap attack works
     def _minimapAttack(self, obs):
         result = actions.FUNCTIONS.no_op()
+        index = -1 if self._top else 0
         if len(obs.observation.multi_select) > 0 or len(obs.observation.single_select) > 0:
             y, x = (obs.observation.feature_minimap.player_relative == 4).nonzero()
             if y.size and actions.FUNCTIONS.Attack_minimap.id in obs.observation.available_actions:
-                result = actions.FUNCTIONS.Attack_minimap("now", [x[0], y[0]])
+                result = actions.FUNCTIONS.Attack_minimap("now", [x[index], y[index]])
                 self._iteration -= 1
         return result
 
