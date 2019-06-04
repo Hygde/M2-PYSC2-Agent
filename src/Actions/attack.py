@@ -6,6 +6,9 @@ from .TrainUnits import TrainUnits
 from .movecamera import MoveCamera
 from .movescreen import MoveScreen
 from Tools import Observations as mobs
+from Tools import TerranAirArmy, TerranGroundArmy
+from Tools import ZergAirArmy, ZergGroundArmy
+from Tools import ProtossAirArmy, ProtossGroundArmy
 
 import numpy as np
 
@@ -34,28 +37,31 @@ class Attack(SC2Action):
     ## zerg focus order
     def _zergsOrder(self, enemies):
         self._logger.debug("zerg")
-        result = np.array([[e[1], e[2]] for e in enemies if (e[0] == Zerg.SpineCrawler.value) or e[0] > Zerg.Drone.value
-         and e[0] != Zerg.Overlord.value and e[0] != Zerg.Overseer.value and e[0] != Zerg.Larva.value])
+        army = [v.value for v in ZergGroundArmy]
+        air = [v.value for v in ZergAirArmy]
+        result = np.array([[e[1], e[2]] for e in enemies if e[0] in army])
         if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if e[0] == Zerg.Drone.value])
-        if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if e[0] < Zerg.Drone.value])
+        if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if not e[0] in air])
         return result
 
     ## protoss focus order
     def _protossOrder(self, enemies):
         self._logger.debug("protoss")
-        result = np.array([[e[1], e[2]] for e in enemies if (e[0] >= Protoss.Zealot.value and not e[0] == Protoss.Probe.value) or e[0] == Protoss.PhotonCannon.value])
+        army = [v.value for v in ProtossGroundArmy]
+        air = [v.value for v in ProtossAirArmy]
+        result = np.array([[e[1], e[2]] for e in enemies if e[0] in army])
         if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if e[0] == Protoss.Probe.value])
-        if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if e[0] < Protoss.Zealot.value])
+        if result.size == 0:result = np.array([[e[1], e[2]] for e in enemies if not e[0] in air and e[0] != Zerg.Larva.value])
         return result
 
     ## terran focus order
     def _terranOrder(self, enemies):
         self._logger.debug("terran")
-        result = np.array([[e[1], e[2]] for e in enemies 
-            if (e[0] > Terran.SCV.value and e[0] != Terran.OrbitalCommand.value and e[0] != Terran.Medivac.value and e[0] != Terran.SupplyDepotLowered.value)
-             or (e[0] == Terran.Bunker.value) or (Terran.AutoTurret.value <= e[0] <= Terran.VikingAssault.value)])
+        army = [v.value for v in TerranGroundArmy]
+        air = [v.value for v in TerranAirArmy]
+        result = np.array([[e[1], e[2]] for e in enemies if e[0] in army])
         if result.size == 0:np.array([[e[1], e[2]] for e in enemies if e[0] == Terran.SCV.value])
-        if result.size == 0:np.array([[e[1], e[2]] for e in enemies if e[0] < Terran.SCV.value])
+        if result.size == 0:np.array([[e[1], e[2]] for e in enemies if not e[0] in air])
         return result
 
     ## cap the coordinate values to 0 < x 64
@@ -98,13 +104,15 @@ class Attack(SC2Action):
                 index = distances.tolist().index(min(distances))
                 result = actions.FUNCTIONS.Attack_screen("now", enemies[index])
                 self._iteration -= 1
-        except:self._iteration -= 1
+        except:
+            self._iteration -= 1
         return result
 
     ## Temporisation function
     def _waitArmy(self, obs):
         y ,_ = (obs.observation.feature_screen.selected == True).nonzero()
         self._enemy_race = self._mobs.getEnemyRace(obs)
+
         if (len(y) == 0) or (self._enemy_race < 0):self._iteration -= 1
         #else:input("self._enemy_race ="+str(self._enemy_race))
 
