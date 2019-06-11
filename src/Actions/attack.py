@@ -17,13 +17,17 @@ class Attack(SC2Action):
     # @param initial_camera_position defines the initial camera position
     def __init__(self, top, initial_camera_position):
         super(Attack, self).__init__()
-        self._duration = 10
+        self._duration = 4
         self._top = top
         self._mobs = mobs()
         self._enemy_race = -1
         self._attack_coordinates = [39.5, 47] if self._top else [22, 25]
         self._initial_camera_position = initial_camera_position
         self._act = SelectAction(Terran.Barracks, SelectType.ALL_TYPE)
+        if self._top:
+            self.attack_coordinates = (39, 48)
+        else:
+            self.attack_coordinates = (18, 20)
 
     ## getter of the barycenter of the army
     def _getBarycenter(self, obs):
@@ -117,6 +121,7 @@ class Attack(SC2Action):
                 result = actions.FUNCTIONS.Attack_minimap("now", [x[0], y[0]])
                 self._iteration -= 1
         return result
+
 
     ## defines the different steps to attack the enemies
     # @param obs is the handler of the current state of the game

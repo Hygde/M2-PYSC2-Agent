@@ -29,7 +29,7 @@ class CreateBase(SC2Action):
     def action(self, obs):
         result = super(CreateBase, self).action(obs)
         _UNIT_TYPE = features.SCREEN_FEATURES.unit_type.index
-        print(self._iteration)
+        #print(self._iteration)
         #input("before isfinished")
         if self._act.isFinished():
             #input("IsFinished")
@@ -78,21 +78,25 @@ class CreateBase(SC2Action):
                     self._iteration -= 1
                     return actions.FUNCTIONS.no_op()
             elif self._iteration == 10:self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE, mobs.getUnitsOfType(obs, units.Terran.SCV)[0]); print(self._iteration)
-            elif self._iteration == 11:self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5]); print(self._iteration)
-            elif self._iteration == 12:self._act = Builder(BFUNCID.ENGINEERINGBAY, [23,38] if self._top else [57, 30], self._QUEUED); print(self._iteration)
-            elif self._iteration == 13:self._act = Builder(BFUNCID.BARRACKS, [10,40] if self._top else [57, 20], self._QUEUED); print(self._iteration)
-            elif self._iteration == 14:self._act = Builder(BFUNCID.SUPPLYDEPOT, [24,30] if self._top else [48, 28], self._NOT_QUEUED); print(self._iteration)
-            elif self._iteration == 15:self._act = Builder(BFUNCID.SUPPLYDEPOT, [34,40] if self._top else [59, 39], self._QUEUED); print(self._iteration)
+            elif self._iteration == 11:
+                if self._top:
+                    self._act = MoveCamera([28.5, 23.5])
+                else:
+                    self._act = MoveCamera([30.5, 48.5])
+            elif self._iteration == 12:self._act = Builder(BFUNCID.ENGINEERINGBAY, [23,38] if self._top else [57, 30], self._QUEUED)
+            elif self._iteration == 13:self._act = Builder(BFUNCID.BARRACKS, [10,40] if self._top else [57, 20], self._QUEUED)
+            elif self._iteration == 14:self._act = Builder(BFUNCID.SUPPLYDEPOT, [24,30] if self._top else [48, 28], self._NOT_QUEUED)
+            elif self._iteration == 15:self._act = Builder(BFUNCID.SUPPLYDEPOT, [34,40] if self._top else [59, 39], self._QUEUED)
             elif self._iteration == 16:self._act = MoveCamera(self._initial_camera_position); print(self._iteration)
-            elif self._iteration == 17:self._act = Harvest(units.Neutral.MineralField, queued=True); print(self._iteration)
-            elif self._iteration == 18:self._act = _Vespenes(self._geyser_position); print(self._iteration)
-            elif self._iteration == 19:self._act = SelectAction(units.Terran.SCV, SelectType.IDLE_WORKER); print(self._iteration)
-            elif self._iteration == 20:self._act = Harvest(units.Neutral.MineralField); print(self._iteration)
-            elif self._iteration == 21:self._act = SelectAction(units.Terran.CommandCenter, SelectType.SINGLE); print(self._iteration)
-            elif self._iteration == 22:self._act = TrainUnits(units.Terran.SCV, 1); print(self._iteration)
-            elif self._iteration == 23:self._act = UseAbility(actions.FUNCTIONS.Morph_OrbitalCommand_quick.id); print(self._iteration)
-            elif self._iteration == 24:self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5]); print(self._iteration)
-            elif self._iteration == 25:self._act = _AdditionalBuildings(self._initial_camera_position, self._top)#; print("Wooohooo je suis la"); print(self._iteration)
+            elif self._iteration == 17:self._act = Harvest(units.Neutral.MineralField, queued=True)
+            elif self._iteration == 18:self._act = _Vespenes(self._geyser_position)
+            elif self._iteration == 19:self._act = SelectAction(units.Terran.SCV, SelectType.IDLE_WORKER)
+            elif self._iteration == 20:self._act = Harvest(units.Neutral.MineralField)
+            elif self._iteration == 21:self._act = SelectAction(units.Terran.CommandCenter, SelectType.SINGLE)
+            elif self._iteration == 22:self._act = TrainUnits(units.Terran.SCV, 1)
+            elif self._iteration == 23:self._act = UseAbility(actions.FUNCTIONS.Morph_OrbitalCommand_quick.id)
+            elif self._iteration == 24:self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5])
+            elif self._iteration == 25:self._act = _AdditionalBuildings(self._initial_camera_position, self._top)
 
         if not self._act.isFinished():result = self._act.action(obs)
         return result

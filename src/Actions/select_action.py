@@ -63,3 +63,15 @@ class SelectAction(SC2Action):
         if self._iteration > 0:
             self._iteration += 1
         return result
+
+    def cap(self,coords):
+        if coords[0] < 0:
+            coords[0] = 0
+        elif coords[0] > 64:
+            coords[0] = 64
+
+        if coords[1] < 0:
+            coords[1] = 0
+        elif coords[1] > 64:
+            coords[1] = 64
+        return coords

@@ -13,7 +13,6 @@ class MoveCamera(SC2Action):
     def action(self, obs):
         result = super(MoveCamera, self).action(obs)
         if self._iteration == 0 and actions.FUNCTIONS.move_camera.id in obs.observation.available_actions:
-            #print("I FUCKING MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOVED")
             result = actions.FUNCTIONS.move_camera(self._coord_xy)
             self._iteration += 1
         elif self._iteration > 0:
