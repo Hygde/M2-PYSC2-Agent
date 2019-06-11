@@ -71,12 +71,12 @@ class CreateBase(SC2Action):
                 self.unit_type = obs.observation["feature_screen"][_UNIT_TYPE]
                 self.vespene_y, self.vespene_x = (self.unit_type == units.Neutral.VespeneGeyser).nonzero()
                 self.vespene_geyser_count = int(math.ceil(len(self.vespene_y) / 97))
-                if self.vespene_geyser_count == 2:
-                    self._iteration -= 1
-                    return actions.FUNCTIONS.no_op()
                 rand = random.randint(0, abs(len(self.vespene_y) - 1))
                 target = [int(self.vespene_x[rand]), int(self.vespene_y[rand])]
                 self._act = Builder(BFUNCID.REFINERY, target)
+                if self.vespene_geyser_count == 2:
+                    self._iteration -= 1
+                    return actions.FUNCTIONS.no_op()
             elif self._iteration == 10:self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE, mobs.getUnitsOfType(obs, units.Terran.SCV)[0]); print(self._iteration)
             elif self._iteration == 11:self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5]); print(self._iteration)
             elif self._iteration == 12:self._act = Builder(BFUNCID.ENGINEERINGBAY, [23,38] if self._top else [57, 30], self._QUEUED); print(self._iteration)
