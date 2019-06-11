@@ -24,7 +24,7 @@ class _AdditionalBuildings(SC2Action):
 
     def action(self, obs):
         result = super(_AdditionalBuildings, self).action(obs)
-        print("Je suis un connard" + str(self._iteration))
+        #print("Je suis un connard" + str(self._iteration))
         if self._act.isFinished():
             self._iteration += 1
             if self._iteration == 1:self._act = UseAbility(actions.FUNCTIONS.Research_TerranInfantryArmor_quick.id)

@@ -121,7 +121,7 @@ class Attack(SC2Action):
     ## defines the different steps to attack the enemies
     # @param obs is the handler of the current state of the game
     def action(self,obs):
-        input("CHICKEN ATTACK TAMTAMTAM")
+        #input("CHICKEN ATTACK TAMTAMTAM")
         result = super(Attack, self).action(obs)
         if self._act.isFinished():
             self._iteration += 1

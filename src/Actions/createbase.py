@@ -60,7 +60,7 @@ class CreateBase(SC2Action):
                 self.unit_type = obs.observation["feature_screen"][_UNIT_TYPE]
                 self.vespene_y, self.vespene_x = (self.unit_type == units.Neutral.VespeneGeyser).nonzero()
                 self.vespene_geyser_count = int(math.ceil(len(self.vespene_y) / 97))
-                input("geyser count" + repr(self.vespene_geyser_count))
+                #input("geyser count" + repr(self.vespene_geyser_count))
                 rand = random.randint(0, abs(len(self.vespene_y) - 1))
                 target = [int(self.vespene_x[rand]), int(self.vespene_y[rand])]
                 self._act = Builder(BFUNCID.REFINERY, target, queued=False)
@@ -92,7 +92,7 @@ class CreateBase(SC2Action):
             elif self._iteration == 22:self._act = TrainUnits(units.Terran.SCV, 1); print(self._iteration)
             elif self._iteration == 23:self._act = UseAbility(actions.FUNCTIONS.Morph_OrbitalCommand_quick.id); print(self._iteration)
             elif self._iteration == 24:self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5]); print(self._iteration)
-            elif self._iteration == 25:self._act = _AdditionalBuildings(self._initial_camera_position, self._top); print("Wooohooo je suis la"); print(self._iteration)
+            elif self._iteration == 25:self._act = _AdditionalBuildings(self._initial_camera_position, self._top)#; print("Wooohooo je suis la"); print(self._iteration)
 
         if not self._act.isFinished():result = self._act.action(obs)
         return result

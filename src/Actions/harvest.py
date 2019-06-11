@@ -20,9 +20,9 @@ class Harvest(SC2Action):
     ## This function defines the way to gather resources
     def action(self, obs):
         result = super(Harvest, self).action(obs)
-        print("coords: " + repr(self._coord_xy))
+        #print("coords: " + repr(self._coord_xy))
         #input("In Havest" + repr(self._coord_xy))
-        input(repr(obs.observation.available_actions))
+        #input(repr(obs.observation.available_actions))
         if self._coord_xy.size == 0:self._coord_xy = np.array([[res.x, res.y] for res in obs.observation.feature_units if res.unit_type == self._resource_type]); print("in xy coords: " + repr(self._coord_xy))
         if self.__GATHER in obs.observation.available_actions:
             #input("Gather AVAILABLE")

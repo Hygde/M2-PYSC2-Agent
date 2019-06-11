@@ -22,53 +22,53 @@ class _CreateWall(SC2Action):
     # @param obs is the handler of the current state of the game
     def action(self, obs):
         result = super(_CreateWall, self).action(obs)
-        print("In create base: Before isfinished" + str(self._iteration))
+        #print("In create base: Before isfinished" + str(self._iteration))
         if self._act.isFinished():
             self._iteration += 1
-            print("In create base: In isfinished " + str(self._iteration))
+            #print("In create base: In isfinished " + str(self._iteration))
             if self._iteration == 1:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5])
             elif self._iteration == 2:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = Builder(BFUNCID.SUPPLYDEPOT, [44,30] if self._top else [28, 28], self._NOT_QUEUED)
             elif self._iteration == 3:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = Builder(BFUNCID.BARRACKS, [43,38] if self._top else [37, 30], self._QUEUED)
             elif self._iteration == 4:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = Builder(BFUNCID.SUPPLYDEPOT, [54,40] if self._top else [39, 39], self._QUEUED)
             elif self._iteration == 5:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = SelectAction(units.Terran.Barracks, SelectType.SINGLE)
             elif self._iteration == 6:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = RallyPoint(units.Terran.Barracks, ([52,48] if self._top else [28,20]), queued=True)
             elif self._iteration == 7:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = TrainUnits(units.Terran.Marine, 5)
             elif self._iteration == 8:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = SelectAction(units.Terran.SupplyDepot, SelectType.SINGLE, coord_xy=[44,30] if self._top else [28, 28])
             elif self._iteration == 9:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = UseAbility(SupplyDepotAbility.LOWER)
             elif self._iteration == 10:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)
             elif self._iteration == 11:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = MoveCamera(self._initial_camera_position)
             elif self._iteration == 12:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = Harvest(units.Neutral.MineralField, queued=True)
             elif self._iteration == 13:
                 self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5])
             elif self._iteration == 14:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 self._act = SelectAction(units.Terran.SupplyDepot, SelectType.SINGLE, coord_xy=[44,30] if self._top else [28, 28])
             elif self._iteration == 15:
-                print("In create base:" + str(self._iteration))
+                #print("In create base:" + str(self._iteration))
                 if len([[unit.x, unit.y] for unit in obs.observation.feature_units if unit.unit_type == units.Terran.SCV]) == 0:self._act = UseAbility(SupplyDepotAbility.RAISE)
                 else: self._iteration -= 1
             elif self._iteration == 16:self._act = SelectAction(units.Terran.Barracks, SelectType.SINGLE)

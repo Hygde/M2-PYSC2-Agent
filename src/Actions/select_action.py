@@ -24,7 +24,7 @@ class SelectAction(SC2Action):
     # @param n_select defines the number of units to select
     def __init__(self, unit_type, kind, coord_xy=np.array([])):
         super(SelectAction, self).__init__()
-        self._duration = 1
+        self._duration = 2
         self._unit_type = unit_type
         self._kind = kind
         self._units = np.array([]) if type(coord_xy) == type(None) else np.array([coord_xy])
@@ -58,5 +58,8 @@ class SelectAction(SC2Action):
             self._iteration += 1
         elif self._kind == SelectType.ARMY and actions.select_army in obs.observation.available_actions:
             result = self.__select_army()
+            self._iteration += 1
+
+        if self._iteration > 0:
             self._iteration += 1
         return result
