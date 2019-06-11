@@ -58,15 +58,12 @@ class _CreateWall(SC2Action):
                 self._act = SelectAction(units.Terran.SCV, SelectType.SINGLE)
             elif self._iteration == 11:
                 print("In create base:" + str(self._iteration))
-                input("ini" + repr(self._initial_camera_position))
                 self._act = MoveCamera(self._initial_camera_position)
             elif self._iteration == 12:
                 print("In create base:" + str(self._iteration))
-                return actions.FunctionCall(actions.FUNCTIONS.no_op.id, [])
                 self._act = Harvest(units.Neutral.MineralField, queued=True)
             elif self._iteration == 13:
                 self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5])
-
             elif self._iteration == 14:
                 print("In create base:" + str(self._iteration))
                 self._act = SelectAction(units.Terran.SupplyDepot, SelectType.SINGLE, coord_xy=[44,30] if self._top else [28, 28])

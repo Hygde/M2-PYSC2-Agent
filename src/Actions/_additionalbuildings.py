@@ -24,6 +24,7 @@ class _AdditionalBuildings(SC2Action):
 
     def action(self, obs):
         result = super(_AdditionalBuildings, self).action(obs)
+        print("Je suis un connard" + str(self._iteration))
         if self._act.isFinished():
             self._iteration += 1
             if self._iteration == 1:self._act = UseAbility(actions.FUNCTIONS.Research_TerranInfantryArmor_quick.id)
@@ -31,15 +32,25 @@ class _AdditionalBuildings(SC2Action):
             elif self._iteration == 3:self._act = SelectAction(units.Terran.SCV, SelectType.IDLE_WORKER)
             elif self._iteration == 4:self._act = Builder(BFUNCID.MISSILETURRET, [36,46] if self._top else [46,37])
             elif self._iteration == 5:self._act = Builder(BFUNCID.MISSILETURRET, [35,34] if self._top else [42,21], queued=True)
-            elif self._iteration == 6:self._act = Builder(BFUNCID.FACTORY, [34,21] if self._top else [48, 48], queued=True)
-            elif self._iteration == 7:self._act = SelectAction(units.Terran.Barracks, SelectType.ALL_TYPE)
-            elif self._iteration == 8:self._barracksReady(obs)
-            elif self._iteration == 9:self._act = TrainUnits(units.Terran.Marine, 3)
-            elif self._iteration == 10:self._act = TrainUnits(units.Terran.Reaper, 7)
-            elif self._iteration == 11:self._act = SelectAction(units.Terran.SCV, SelectType.IDLE_WORKER)
-            elif self._iteration == 12:self._act = Builder(BFUNCID.ARMORY, [15,50] if self._top else [60, 49], queued=True)
-            elif self._iteration == 13:self._act = MoveCamera(self._initial_camera_position)
-            elif self._iteration == 14:self._act = Harvest(units.Neutral.MineralField, queued=True)
-            elif self._iteration == 15:self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5])
+            elif self._iteration == 6:self._act = SelectAction(units.Terran.Barracks, SelectType.ALL_TYPE)
+            elif self._iteration ==7:self._barracksReady(obs)
+            elif self._iteration == 8:self._act = TrainUnits(units.Terran.Marine, 3)
+            elif self._iteration == 9:self._act = TrainUnits(units.Terran.Reaper, 7)
+            elif self._iteration == 10:self._act = SelectAction(units.Terran.SCV, SelectType.IDLE_WORKER)
+            elif self._iteration == 11:self._act = MoveCamera(self._initial_camera_position)
+            elif self._iteration == 12:self._act = Harvest(units.Neutral.MineralField, queued=True)
+            elif self._iteration == 13:self._act = MoveCamera([28.5, 23.5] if self._top else [30.5, 48.5])
         if not self._act.isFinished():result = self._act.action(obs)
         return result
+
+    def cap(self,coords):
+        if coords[0] < 0:
+            coords[0] = 0
+        elif coords[0] > 64:
+            coords[0] = 64
+
+        if coords[1] < 0:
+            coords[1] = 0
+        elif coords[1] > 64:
+            coords[1] = 64
+        return coords
